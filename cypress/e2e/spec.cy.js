@@ -68,4 +68,82 @@ describe('TODOMvc App', () => {
       .children()
       .should('have.length', 2);
   });
+
+  it('Limpa tarefas completas', () => {
+    cy.visit('');
+
+    cy.get('[data-cy=todo-input]')
+      .type('Comprar Trembolona{enter}')
+      .type('Comprar Whey{enter}')
+      .type('Comprar Creatina{enter}');
+    
+    cy.get('[data-cy=todos-list] > li [data-cy=toggle-todo-checkbox]')
+      .eq(0)
+      .click();
+    
+    cy.get('[data-cy=todos-list] > li [data-cy=toggle-todo-checkbox]')
+      .eq(1)
+      .click();
+    
+    cy.get('.clear-completed')
+      .click();
+
+  });
+
+  it('Edita um tarefa', () => {
+    cy.visit('');
+
+    cy.get('[data-cy=todo-input]')
+      .type('Hackear a NASA{enter}')
+      .type('Acordar{enter}')
+    
+    cy.get('li label')
+      .contains('Hackear a NASA')
+      .dblclick();
+    
+    cy.get('li.editing .edit')
+      .clear()
+      .type('Sonhar que hackeou a NASA{enter}');
+    
+    cy.get('[data-cy=todos-list] > li [data-cy=toggle-todo-checkbox]')
+      .eq(0)
+      .click();
+    
+    cy.get('[data-cy=todos-list] > li [data-cy=toggle-todo-checkbox]')
+      .eq(1)
+      .click();
+  });
+
+  it('Marca e desmarca todos as tarefas', () => {
+    cy.visit('');
+
+    cy.get('[data-cy=todo-input]')
+      .type('Acordar{enter}')
+      .type('Tomar metoprolol(Remedio Coraçao){enter}')
+      .type('Estudar para a prova de ES{enter}');
+    
+    cy.get('[data-cy=todos-list] > li [data-cy=toggle-todo-checkbox]')
+      .eq(0)
+      .click();
+    
+    cy.get('[data-cy=todos-list] > li [data-cy=toggle-todo-checkbox]')
+      .eq(1)
+      .click();
+
+    cy.get('[data-cy=todos-list] > li [data-cy=toggle-todo-checkbox]')
+      .eq(2)
+      .click();
+    
+      cy.get('[data-cy=todos-list] > li [data-cy=toggle-todo-checkbox]')
+      .eq(0)
+      .click();
+    
+    cy.get('[data-cy=todos-list] > li [data-cy=toggle-todo-checkbox]')
+      .eq(1)
+      .click();
+
+    cy.get('[data-cy=todos-list] > li [data-cy=toggle-todo-checkbox]')
+      .eq(2)
+      .click();
+  });
 });
